@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Culqi Test</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="waitMe.min.css"/>
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Culqi PHP Example</h1>
+      <form id="form-payment">
+        <div class="form-group">
+          <label>
+            <span>Tarjeta</span>
+            <input type="text" class="form-control" name="input-card" id="input-card" data-culqi="card[number]"/>
+          </label>
+        </div>
+        <div class="form-group">
+          <label>
+            <span>CVV</span>
+            <input type="text" class="form-control" name="input-cvc" id="input-cvc" data-culqi="card[cvv]" />
+          </label>
+        </div>
+        <div class="form-group">
+          <label>
+            <span>Fecha expiración (MM)</span>
+            <input type="text" class="form-control"   data-culqi="card[exp_month]"/><br>
+            <span>Fecha expiración (YYYY)</span>
+            <input type="text" class="form-control" data-culqi="card[exp_year]"/>
+          </label>
+        </div>
+        <div  class="form-group">
+            <label>
+                <span>Email</span>
+                <input type="text" class="form-control" name="input-email" id="input-email" data-culqi="card[email]"/>
+            </label>
+          </div>
+      </form>
+      <a id="miBoton" class="btn btn-primary" href="#" >Pay</a>
+
+      <br/><br/><br/>
+      <div class="panel panel-default" id="response-panel">
+        <div class="panel-heading">Response</div>
+        <div class="panel-body" id="response">
+        </div>
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="http://checkout.culqi.com/v2"></script>
+    <script src="waitMe.min.js"></script>
+    <script type="text/javascript" src="js/app.js" ></script>
+    <script type="text/javascript" src="js/checkout.js" ></script>
+    <script type="text/javascript">
+      $(function(){
+        $("#form-payment").checkout({
+	    		inputs: [{
+	    		      id: "#input-card",
+	    		      type: "card"
+	    		    },
+	    		    {
+	    		      id: "#input-cvc",
+	    		      type: "cvc"
+	    		    },
+	    		    {
+	    		      id: "#input-email",
+	    		      type: "email"
+	    		    }
+	    		],
+	    		submit: {
+	    		    id: "#btnPay"
+	    		}
+    		});
+        var validator = $.fn.checkout();
+
+        $("#btn-validate-card").on('click',function(){
+          var valueTest = $("#input-validate-card").val();
+          var isValid = validator.isCardNumberValid(valueTest);
+          console.log(isValid);
+        });
+      });
+    </script>
+  </body>
+</html>
